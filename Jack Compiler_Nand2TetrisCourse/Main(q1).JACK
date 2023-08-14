@@ -1,0 +1,84 @@
+class Main {
+    function void main() {
+        var Array arr;
+        var int i, len;
+        let len = Keyboard.readInt("Number of elements in the array: ");
+        let arr = Array.new(len);
+        let i = 0;
+        while (i < len) {
+            let arr[i] = Keyboard.readInt("Enter the number: ");
+            let i = i + 1;
+        }
+        do Output.printString(" USER ENTERED ARRAY: ");
+        do Main.printArray(arr, len);
+        do Main.sortArray(arr, 0, len-1);
+        do Output.println();
+        do Output.printString(" SORTED ARRAY: ");
+        do Main.printArray(arr, len);
+        return;
+    }
+    function void mergeArray(Array arr, int left, int mid, int right) {
+        var int m, n, k;
+        var int len1, len2;
+        var Array L;
+        var Array R;
+        let len1 = mid - left + 1;
+        let len2 = right - mid;
+        let L = Array.new(len1);
+        let R = Array.new(len2);
+        let m = 0;
+        while (m < len1) {
+            let L[m] = arr[left + m];
+            let m = m + 1;
+        }
+        let n = 0;
+        while (n < len2) {
+            let R[n] = arr[mid + 1 + n];
+            let n = n + 1;
+        }
+        let m = 0;
+        let n = 0;
+        let k = left;
+        while ((m < len1) & (n < len2)) {
+            if (L[m] > R[n]) {
+                let arr[k] = R[n];
+                let n = n + 1;
+            } else {
+                let arr[k] = L[m];
+                let m = m + 1;
+            }
+            let k = k + 1;
+        }
+        while (m < len1) {
+            let arr[k] = L[m];
+            let m = m + 1;
+            let k = k + 1;
+        }
+        while (n < len2) {
+            let arr[k] = R[n];
+            let n = n + 1;
+            let k = k + 1;
+        }
+        return;
+    }
+    function void sortArray(Array arr, int left, int right) {
+        var int mid;
+        if (left < right) {
+            let mid = Math.divide((left + right), 2);
+            do Main.sortArray(arr, left, mid);
+            do Main.sortArray(arr, mid + 1, right);
+            do Main.mergeArray(arr, left, mid, right);
+        }
+        return;
+    }
+    function void printArray(Array arr, int length) {
+        var int index;
+        let index = 0;
+        while (index < length) {
+            do Output.printInt(arr[index]);
+            do Output.printString(" ");
+            let index = index + 1;
+        }
+        return;
+    }
+}
